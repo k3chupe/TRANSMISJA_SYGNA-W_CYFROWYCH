@@ -25,14 +25,16 @@ class ModemApp(tk.Tk):
 
     def create_widgets(self):
         # --- Ramka do zarządzania połączeniem ---
-        connection_frame = tk.Frame(self, padding=10)
-        connection_frame.pack(fill=tk.X)
+        # Poprawka: Usunięto nieprawidłowy argument 'padding' i dodano padx/pady w metodzie pack()
+        connection_frame = tk.Frame(self)
+        connection_frame.pack(fill=tk.X, padx=10, pady=5)
 
         # Etykieta i lista rozwijana dla portów COM
         tk.Label(connection_frame, text="Port COM:").pack(side=tk.LEFT, padx=(0, 5))
         
         # Pobieranie dostępnych portów COM
-        available_ports = [port.device for port in serial.tools.list_ports.comports()]
+        ports = serial.tools.list_ports.comports()
+        available_ports = [port.device for port in ports]
         self.com_port_var = tk.StringVar(self)
         if available_ports:
             self.com_port_var.set(available_ports[0])
@@ -51,8 +53,9 @@ class ModemApp(tk.Tk):
         self.log_area.pack(expand=True, fill=tk.BOTH, padx=10, pady=5)
 
         # --- Ramka do wprowadzania danych ---
-        input_frame = tk.Frame(self, padding=10)
-        input_frame.pack(fill=tk.X)
+        # Poprawka: Usunięto nieprawidłowy argument 'padding' i dodano padx w metodzie pack()
+        input_frame = tk.Frame(self)
+        input_frame.pack(fill=tk.X, padx=10)
         
         tk.Label(input_frame, text="Komenda/Wiadomość:").pack(side=tk.LEFT)
         self.entry_var = tk.StringVar()
@@ -64,8 +67,9 @@ class ModemApp(tk.Tk):
         self.send_button.pack(side=tk.LEFT)
 
         # --- Ramka do operacji na plikach ---
-        file_frame = tk.Frame(self, padding=10)
-        file_frame.pack(fill=tk.X)
+        # Poprawka: Usunięto nieprawidłowy argument 'padding' i dodano padx/pady w metodzie pack()
+        file_frame = tk.Frame(self)
+        file_frame.pack(fill=tk.X, padx=10, pady=5)
         
         self.send_file_button = tk.Button(file_frame, text="Wyślij Plik (XModem)", command=self.send_file, state=tk.DISABLED)
         self.send_file_button.pack(side=tk.LEFT, padx=5)
